@@ -42,7 +42,7 @@ public class PostsService {
                         criteriaBuilder.like(root.get("title"), "%" + keyword + "%"),   //title
                         criteriaBuilder.like(root.get("content"), "%" + keyword + "%"), //post content
                         criteriaBuilder.like(m1.get("memberId"), "%" + keyword + "%"),  //author
-                        criteriaBuilder.like(m1.get("memberNickname"), "%" + keyword + "%"), //nickname 12/04add
+                        criteriaBuilder.like(m1.get("nickname"), "%" + keyword + "%"), //nickname 12/04add
                         criteriaBuilder.like(c.get("content"), "%" + keyword + "%"),    //comment content
                         criteriaBuilder.like(m2.get("memberId"), "%" + keyword + "%")); //comment author
             }
