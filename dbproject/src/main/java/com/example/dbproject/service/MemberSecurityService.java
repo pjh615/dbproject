@@ -30,8 +30,9 @@ public class MemberSecurityService implements UserDetailsService {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
         Member member = _member.get();
+        String role = member.getRole();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if ("admin".equals(memberId)) {
+        if ("admin".equals(role)) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getRole()));
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.MEMBER.getRole()));
