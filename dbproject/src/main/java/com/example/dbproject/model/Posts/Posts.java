@@ -1,9 +1,8 @@
-package com.example.dbproject.domain.Posts;
+package com.example.dbproject.model.Posts;
 
-import com.example.dbproject.domain.Images.Images;
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Comments.Comments;
-import com.example.dbproject.domain.Reply.Reply;
+import com.example.dbproject.model.Images.Images;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Comments.Comments;
 import jakarta.persistence.*;
 
 import lombok.Getter;

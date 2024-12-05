@@ -1,8 +1,6 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Member.MemberRepository;
-import org.junit.jupiter.api.Test;
+import com.example.dbproject.model.Member.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

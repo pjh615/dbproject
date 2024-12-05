@@ -1,10 +1,10 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.DataNotFoundException;
-import com.example.dbproject.domain.Comments.Comments;
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Posts.Posts;
-import com.example.dbproject.domain.Posts.PostsRepository;
+import com.example.dbproject.exception.DataNotFoundException;
+import com.example.dbproject.model.Comments.Comments;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Posts.Posts;
+import com.example.dbproject.model.Posts.PostsRepository;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

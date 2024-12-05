@@ -1,8 +1,8 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.DataNotFoundException;
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Member.MemberRepository;
+import com.example.dbproject.exception.DataNotFoundException;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,12 @@ public class MemberService {
     private final MemberRepository mRepo;
     private final PasswordEncoder passwordEncoder;
 
-    public Member join(String memberId, String nickname, String password) {
+    public Member join(String memberId, String nickname, String password, String role) {
         Member member = new Member();
         member.setMemberId(memberId);
         member.setNickname(nickname);
         member.setPassword(passwordEncoder.encode(password));
+        member.setRole(role);
         validDupMem(member);
         mRepo.save(member);
         return member;
@@ -39,11 +40,11 @@ public class MemberService {
     private void validDupMem(Member member){
         mRepo.findByMemberId(member.getMemberId())
                 .ifPresent(m -> {
-                            throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
-                        });
+                    throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
+                });
         mRepo.findByNickname(member.getNickname())
                 .ifPresent(m -> {
-                   throw new IllegalArgumentException("이미 존재하는 닉네임 입니다.");
+                    throw new IllegalArgumentException("이미 존재하는 닉네임 입니다.");
                 });
     }
 

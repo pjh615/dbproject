@@ -21,4 +21,6 @@ public class MemberForm {
 
     @NotEmpty(message = "비밀번호를 확인해주세요.")
     private String password2;
+
+    private String role;
 }

@@ -1,4 +1,4 @@
-package com.example.dbproject.domain.Posts;
+package com.example.dbproject.model.Posts;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

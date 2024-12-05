@@ -1,15 +1,12 @@
 package com.example.dbproject.controller;
 
 import com.example.dbproject.controller.form.MemberForm;
-import com.example.dbproject.domain.Member.Member;
 import com.example.dbproject.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
@@ -35,7 +32,7 @@ public class MemberController {
         }
 
         try{
-            mService.join(memberForm.getMemberId(), memberForm.getNickname(), memberForm.getPassword1());
+            mService.join(memberForm.getMemberId(), memberForm.getNickname(), memberForm.getPassword1(), memberForm.getRole());
         } catch (Exception e){
             e.printStackTrace();
             bindingResult.reject("signupFailed", e.getMessage());

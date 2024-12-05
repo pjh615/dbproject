@@ -1,9 +1,8 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Member.MemberRepository;
-import com.example.dbproject.domain.Member.MemberRole;
-import lombok.Generated;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Member.MemberRepository;
+import com.example.dbproject.model.Member.MemberRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +33,8 @@ public class MemberSecurityService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if ("admin".equals(role)) {
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getRole()));
+        } else if ("bartender".equals(role)) {
+            authorities.add(new SimpleGrantedAuthority(MemberRole.BARTENDER.getRole()));
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.MEMBER.getRole()));
         }

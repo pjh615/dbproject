@@ -1,7 +1,7 @@
-package com.example.dbproject.domain.Images;
+package com.example.dbproject.model.Images;
 
 
-import com.example.dbproject.domain.Posts.Posts;
+import com.example.dbproject.model.Posts.Posts;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;

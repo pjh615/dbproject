@@ -1,12 +1,11 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.DataNotFoundException;
-import com.example.dbproject.domain.Comments.Comments;
-import com.example.dbproject.domain.Comments.CommentsRepository;
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Posts.Posts;
+import com.example.dbproject.exception.DataNotFoundException;
+import com.example.dbproject.model.Comments.Comments;
+import com.example.dbproject.model.Comments.CommentsRepository;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Posts.Posts;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -8,6 +8,14 @@
     <form th:action="@{/signup}" th:object="${memberForm}" method="post">
         <div th:replace="~{layout/form_errors :: formErrorsFrag}"></div>
         <div class="mb-3">
+            <label for="role" class="form-label">역할</label>
+            <select th:field="*{role}" class="form-select">
+                <option value="member" selected> 일반 유저 </option>
+                <option value="bartender"> 바텐더 </option>
+                <option value="admin"> 관리자 </option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="memberId" class="form-label">ID</label>
             <input type="text" th:field="*{memberId}" class="form-control">
         </div>

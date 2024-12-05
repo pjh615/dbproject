@@ -1,4 +1,4 @@
-package com.example.dbproject.domain.Comments;
+package com.example.dbproject.model.Comments;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

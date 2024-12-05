@@ -18,7 +18,7 @@
     <div class="card my-3">
         <div class="card-body">
             <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" alt="Post Image" width="50%;">
-            <span class="card-text" style="white-space: pre-line;"
+            <span class="card-text" style="white-space: pre-line; margin-left: 20px;"
                   th:text="${post.content}"></span>
 
             <div class="my-3">
@@ -34,8 +34,8 @@
                     and (#authentication.getPrincipal().getUsername() == post.author.memberId)}" th:text="수정"></a>
                 <a href="javascript:void(0);" th:data-url="@{|/post/delete/${post.id}|}"
                    class="delete btn btn-sm btn-outline-secondary"
-                   sec:authorize="isAuthenticated()" th:if="${post.author != null
-                    and #authentication.getPrincipal().getUsername() == post.author.memberId}" th:text="삭제"></a>
+                   sec:authorize="isAuthenticated()" th:if="${#authentication.authorities.![authority].contains('ROLE_ADMIN')
+                    or (post.author != null and #authentication.getPrincipal().getUsername() == post.author.memberId)}" th:text="삭제"></a>
             </div>
         </div>
     </div>
@@ -73,8 +73,8 @@
                    and (#authentication.getPrincipal().getUsername() == comment.author.memberId)}" th:text="수정"></a>
                     <a href="javascript:void(0);" th:data-url="@{|/comment/delete/${comment.id}|}"
                        class="delete btn btn-sm btn-outline-secondary"
-                       sec:authorize="isAuthenticated()" th:if="${comment.author != null
-                   and (#authentication.getPrincipal().getUsername() == comment.author.memberId)}" th:text="삭제"></a>
+                       sec:authorize="isAuthenticated()" th:if="${#authentication.authorities.![authority].contains('ROLE_ADMIN')
+                   or (comment.author != null and (#authentication.getPrincipal().getUsername() == comment.author.memberId))}" th:text="삭제"></a>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
         </div>
     </div>
     <!-- 댓글 등록 -->
-    <!--    답글 버튼이 눌렸을 경우 답글 등록으로 변환-->
+    <!-- 답글 버튼이 눌렸을 경우 답글 등록으로 변환 -->
     <form th:action="@{|/comment/create/${post.id}|}" th:object="${commentsForm}" method="post" class="my-3"
           id="commentForm" th:data-post-id="${post.id}">
         <div th:replace="~{layout/form_errors :: formErrorsFrag}"></div>
@@ -149,7 +149,6 @@
             const submitButton = form.querySelector('input[type="submit"]');
             submitButton.value = '답글 등록';
             //버튼 눌리면 form reset
-
             const cancelButton = document.createElement('button');
             cancelButton.className = 'btn btn-primary my-2';
             cancelButton.style.marginLeft = '10px';
@@ -164,8 +163,5 @@
 
         });
     });
-
-
-    //     답글 form reset 필요
 </script>
 </html>

@@ -1,18 +1,13 @@
 package com.example.dbproject.controller;
 
-import com.example.dbproject.domain.Posts.Posts;
-import com.example.dbproject.domain.Posts.PostsRepository;
+import com.example.dbproject.model.Posts.Posts;
 import com.example.dbproject.service.PostsService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller

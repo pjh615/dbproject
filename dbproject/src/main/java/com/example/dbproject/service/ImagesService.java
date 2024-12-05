@@ -1,14 +1,13 @@
 package com.example.dbproject.service;
 
-import com.example.dbproject.domain.Images.Images;
-import com.example.dbproject.domain.Images.ImagesRepository;
-import com.example.dbproject.domain.Posts.Posts;
+import com.example.dbproject.model.Images.Images;
+import com.example.dbproject.model.Images.ImagesRepository;
+import com.example.dbproject.model.Posts.Posts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -1,4 +1,4 @@
-package com.example.dbproject.domain.Images;
+package com.example.dbproject.model.Images;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

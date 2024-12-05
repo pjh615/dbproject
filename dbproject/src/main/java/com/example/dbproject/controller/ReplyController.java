@@ -1,12 +1,10 @@
 package com.example.dbproject.controller;
 
-import com.example.dbproject.controller.form.CommentsForm;
 import com.example.dbproject.controller.form.ReplyForm;
-import com.example.dbproject.domain.Comments.Comments;
-import com.example.dbproject.domain.Member.Member;
-import com.example.dbproject.domain.Posts.Posts;
-import com.example.dbproject.domain.Reply.Reply;
-import com.example.dbproject.domain.Reply.ReplyRepository;
+import com.example.dbproject.model.Comments.Comments;
+import com.example.dbproject.model.Member.Member;
+import com.example.dbproject.model.Posts.Posts;
+import com.example.dbproject.model.Reply.Reply;
 import com.example.dbproject.service.CommentsService;
 import com.example.dbproject.service.MemberService;
 import com.example.dbproject.service.PostsService;
