@@ -1,0 +1,25 @@
+<!doctype html>
+<html
+        lang="ko"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <!-- meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+  <title>2024 DB project</title>
+</head>
+<body>
+<!-- 네이게이션바 -->
+<nav th:replace="~{layout/navbar :: navbarFrag}"></nav>
+<!-- container -->
+<th:block layout:fragment="content"></th:block>
+<!-- container end -->
+<!-- js -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

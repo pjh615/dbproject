@@ -1,0 +1,98 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/post/create}" class="btn btn-primary">게시글 등록</a>
+        </div>
+        <div class="col-6">
+            <div class="input-group">
+                <input type="text" id="search_keyword" class="form-control" th:value="${keyword}">
+                <button class="btn btn-outline-secondary" type="button" id="search_btn">찾기</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+    <tbody>
+    <tr th:each="post, loop : ${paging}" class="text-center">
+        <!--    게시글 번호        <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
+        <td>
+            <a th:href="@{|/post/detail/${post.id}|}">
+            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" alt="Post Image" width="33.33%;">
+            <div>
+                <span th:text="${post.title}"></span>
+            </div>
+            </a>
+            <div>
+                <span th:if="${post.author != null}" th:text="${post.author.nickname}"></span>
+            </div>
+            <div>
+                <span class="text-black small ms-2">
+                    댓글
+                    <span th:text="${#lists.size(post.comments)}"></span>
+                </span>
+                <span class="text-danger small ms-2">
+                    좋아요
+                    <span th:text="${#lists.size(post.liker)}"></span>
+                </span>
+
+            </div>
+        </td>
+
+        <!--            <td class="text-start">-->
+        <!--                -->
+        <!--            </td>-->
+        <!--            <td th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></td>-->
+    </tr>
+    </tbody>
+    </table>
+    <!--페이징-->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${paging.hasPrevious}? 'disabled'">
+                <a class="page-link" href="javascript:void(0);" th:data-page="${paging.number-1}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                th:classappend="${page == paging.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" href="javascript:void(0);" th:data-page="${page}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" href="javascript:void(0);" th:data-page="${paging.number+1}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--페이징 끝-->
+    <form th:action="@{/}" method="get" id="search_form">
+        <input type="hidden" id="keyword" name="keyword" th:value="${keyword}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
+</div>
+
+<div>
+    <form action="/logout" method="get">
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
+</div> <!-- /container -->
+<script layout:fragment="script" type="text/javascript">
+    const page_elements = document.getElementsByClassName("page-link");
+    Array.from(page_elements).forEach(element => {
+        element.addEventListener("click", () => {
+            document.getElementById("page").value = element.dataset.page;
+            document.getElementById("search_form").submit();
+        });
+    });
+    const search_btn = document.getElementById("search_btn");
+    search_btn.addEventListener("click", () => {
+        document.getElementById("keyword").value = document.getElementById("search_keyword").value;
+        document.getElementById("page").value = 0;
+        document.getElementById("search_form").submit();
+    });
+</script>
+</html>

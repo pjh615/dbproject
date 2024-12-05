@@ -1,0 +1,171 @@
+<html layout:decorate="~{layout/layout}">
+<div layout:fragment="content" class="container my-3">
+    <h2 class="border-bottom py-2" th:text="${post.title}"></h2>
+    <div class="d-flex justify-content-end">
+        <div class="badge bg-light text-dark p-2 text-start">
+            <div class="mb-2">
+                <span th:if="${post.author != null}" th:text="${post.author.nickname}"></span>
+            </div>
+            <div th:if="${post.updateDate == null}">
+                <div th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div>
+            <div th:if="${post.updateDate != null}">
+                <div class="mb-2">(수정됨)</div>
+                <div th:text="${#temporals.format(post.updateDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" alt="Post Image" width="50%;">
+            <span class="card-text" style="white-space: pre-line;"
+                  th:text="${post.content}"></span>
+
+            <div class="my-3">
+                <a th:href="@{|/post/like/${post.id}|}" class="recommend btn btn-sm btn-outline-secondary">
+                    좋아요
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.liker)}"></span>
+                </a>
+                <span class="btn btn-sm btn-outline-secondary"> 댓글
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(post.comments)}"></span>
+                </span>
+                <a th:href="@{|/post/update/${post.id}|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()" th:if="${post.author != null
+                    and (#authentication.getPrincipal().getUsername() == post.author.memberId)}" th:text="수정"></a>
+                <a href="javascript:void(0);" th:data-url="@{|/post/delete/${post.id}|}"
+                   class="delete btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()" th:if="${post.author != null
+                    and #authentication.getPrincipal().getUsername() == post.author.memberId}" th:text="삭제"></a>
+            </div>
+        </div>
+    </div>
+    <!-- 댓글 -->
+    <div th:each="comment : ${post.comments}">
+        <div class="card my-3">
+            <div class="card-body">
+                <div class="card-text" style="white-space: pre-line;" th:text="${comment.content}"></div>
+                <div class="d-flex justify-content-end">
+                    <div class="badge bg-light text-dark p-2 text-start">
+                        <div class="mb-2">
+                            <span th:if="${comment.author != null}" th:text="${comment.author.nickname}"></span>
+                        </div>
+                        <div th:if="${comment.updateDate == null}">
+                            <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                        <div th:if="${comment.updateDate != null}">
+                            <div class="mb-2">(수정됨)</div>
+                            <div th:text="${#temporals.format(comment.updateDate, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <a th:href="@{|/comment/like/${comment.id}|}" class="recommend btn btn-sm btn-outline-secondary">
+                        좋아요
+                        <span class="badge rounded-pill bg-success" th:text="${#lists.size(comment.liker)}"></span>
+                    </a>
+                    <!--답글 버튼-->
+                    <a href="javascript:void(0);" class="reply btn btn-sm btn-outline-secondary"
+                       sec:authorize="isAuthenticated()" th:if="${comment.author != null}"
+                       th:attr="data-comment-id=${comment.id}" th:text="답글"></a>
+                    <!--댓글 수정, 삭제-->
+                    <a th:href="@{|/comment/update/${comment.id}|}" class="btn btn-sm btn-outline-secondary"
+                       sec:authorize="isAuthenticated()" th:if="${comment.author != null
+                   and (#authentication.getPrincipal().getUsername() == comment.author.memberId)}" th:text="수정"></a>
+                    <a href="javascript:void(0);" th:data-url="@{|/comment/delete/${comment.id}|}"
+                       class="delete btn btn-sm btn-outline-secondary"
+                       sec:authorize="isAuthenticated()" th:if="${comment.author != null
+                   and (#authentication.getPrincipal().getUsername() == comment.author.memberId)}" th:text="삭제"></a>
+                </div>
+            </div>
+        </div>
+        <!--대댓글 내용 표시-->
+        <div th:each="reply : ${comment.replies}">
+            <div class="card my3 reply-item">
+                <div class="card-body">
+                    <div class="card-text" style="white-space: pre-line;" th:text="${reply.content}"></div>
+                    <div class="d-flex justify-content-end">
+                        <div class="badge bg-light text-dark p-2 text-start">
+                            <div class="mb-2">
+                                <span th:if="${reply.author != null}" th:text="${reply.author.nickname}"></span>
+                            </div>
+                            <div th:if="${reply.updateDate == null}">
+                                <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            </div>
+                            <div th:if="${reply.updateDate != null}">
+                                <div class="mb-2">(수정됨)</div>
+                                <div th:text="${#temporals.format(reply.updateDate, 'yyyy-MM-dd HH:mm')}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <a th:href="@{|/reply/like/${reply.id}|}" class="recommend btn btn-sm btn-outline-secondary">
+                            좋아요
+                            <span class="badge rounded-pill bg-success" th:text="${#lists.size(reply.liker)}"></span>
+                        </a>
+                        <!--답글 수정, 삭제-->
+                        <a th:href="@{|/reply/update/${reply.id}|}" class="btn btn-sm btn-outline-secondary"
+                           sec:authorize="isAuthenticated()" th:if="${reply.author != null
+                   and (#authentication.getPrincipal().getUsername() == reply.author.memberId)}" th:text="수정"></a>
+                        <a href="javascript:void(0);" th:data-url="@{|/reply/delete/${reply.id}|}"
+                           class="delete btn btn-sm btn-outline-secondary"
+                           sec:authorize="isAuthenticated()" th:if="${reply.author != null
+                   and (#authentication.getPrincipal().getUsername() == reply.author.memberId)}" th:text="삭제"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 댓글 등록 -->
+    <!--    답글 버튼이 눌렸을 경우 답글 등록으로 변환-->
+    <form th:action="@{|/comment/create/${post.id}|}" th:object="${commentsForm}" method="post" class="my-3"
+          id="commentForm" th:data-post-id="${post.id}">
+        <div th:replace="~{layout/form_errors :: formErrorsFrag}"></div>
+        <textarea sec:authorize="isAnonymous()" disabled th:field="*{content}"
+                  rows="3" class="form-control"></textarea>
+        <textarea sec:authorize="isAuthenticated()" th:field="*{content}"
+                  rows="3" class="form-control"></textarea>
+        <input type="submit" value="댓글 등록" class="btn btn-primary my-2">
+    </form>
+</div>
+<script layout:fragment="script" type="text/javascript">
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(element => {
+        element.addEventListener('click', () => {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+                location.href = element.dataset.url;
+            }
+        });
+    });
+
+    const reply_elements = document.getElementsByClassName("reply");
+    Array.from(reply_elements).forEach(element => {
+        element.addEventListener('click', () => {
+            const commentId = element.getAttribute('data-comment-id');
+            const form = document.getElementById('commentForm');
+            const postId = form.getAttribute('data-post-id');
+            const originalAction = `/comment/create/${postId}`;
+            form.action = `/reply/create/${commentId}`;
+
+            const submitButton = form.querySelector('input[type="submit"]');
+            submitButton.value = '답글 등록';
+            //버튼 눌리면 form reset
+
+            const cancelButton = document.createElement('button');
+            cancelButton.className = 'btn btn-primary my-2';
+            cancelButton.style.marginLeft = '10px';
+            cancelButton.textContent = '답글 취소';
+            cancelButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                form.action = originalAction;
+                submitButton.value = '댓글 등록';
+                cancelButton.remove();
+            });
+            submitButton.parentNode.insertBefore(cancelButton, submitButton.nextSibling);
+
+        });
+    });
+
+
+    //     답글 form reset 필요
+</script>
+</html>
