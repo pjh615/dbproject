@@ -25,6 +25,8 @@ public class Member {
 
     private String password;
 
+    private String role;
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Posts> posts;
 
