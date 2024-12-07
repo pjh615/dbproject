@@ -4,7 +4,11 @@
     margin-bottom: 15px;
 }
 
-.markdown-content p {
-    margin: 0;
-    display: inline;
+.markdown-content{
+    width: 50%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
+ .content-image{
+     width: 50%;
+ }

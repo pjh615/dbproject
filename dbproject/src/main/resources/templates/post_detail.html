@@ -17,13 +17,8 @@
     </div>
     <div class="card my-3">
         <div class="card-body">
-            <span th:if="${post.images[0].imageName != ''}">
-                <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="50%">
-            </span>
-            <span class="card-text markdown-content" style="width: 50%;" th:utext="${@commonUtil.markdown(post.content)}">
-                <span th:text="${post.content}"></span>
-            </span>
-
+            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="50%" th:if="${post.images[0].imageName != ''}">
+            <span class="card-text" style="width: 50%;" th:text="${(post.content)}"></span>
             <div class="my-3">
                 <a th:href="@{|/post/like/${post.id}|}" class="recommend btn btn-sm btn-outline-secondary">
                     좋아요
