@@ -41,7 +41,7 @@ public class ImagesService {
         }
     }
 
-    public String save(MultipartFile image, String uploadDir) throws IOException {
+    private String save(MultipartFile image, String uploadDir) throws IOException {
         String imageName = image.getOriginalFilename();
         if(imageName == null || imageName.trim().isEmpty()){
             return "";
@@ -55,5 +55,10 @@ public class ImagesService {
         Files.write(path, image.getBytes());
 
         return DbFilePath;
+    }
+
+    public void delete(Posts post){
+        Images i = iRepo.findAllByPostId(post.getId());
+        iRepo.delete(i);
     }
 }

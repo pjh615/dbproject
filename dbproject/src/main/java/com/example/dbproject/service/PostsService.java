@@ -26,7 +26,6 @@ import java.util.Optional;
 public class PostsService {
 
     private final PostsRepository pRepo;
-    private final ImagesService iService;
 
     private Specification<Posts> search(String keyword) {
         return new Specification<>() {

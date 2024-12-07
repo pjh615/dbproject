@@ -75,7 +75,7 @@ public class PostsController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/post/update/{id}")
-    public String updatePost(@Valid PostsForm postsForm, BindingResult bindingResult, Principal principal, @PathVariable("id") Integer id) {
+    public String updatePost(@Valid PostsForm postsForm, @Valid List<MultipartFile> images, BindingResult bindingResult, Principal principal, @PathVariable("id") Integer id) {
         if(bindingResult.hasErrors()) {
             return "post_create";
         }
@@ -84,6 +84,8 @@ public class PostsController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
         }
         pService.update(post, postsForm.getTitle(), postsForm.getContent());
+        iService.delete(post);
+        iService.upload(post, images);
         return String.format("redirect:/post/detail/%s", id);
     }
 
