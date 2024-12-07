@@ -1,4 +1,4 @@
-# Database term project
+# Databases Programming Project
 
 아래 링크로 접속하시면 테스트해보실수 있습니다.
  
