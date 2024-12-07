@@ -10,10 +10,7 @@ public class CommonUtil {
     public String markdown(String markdown) {
         Parser parser = Parser.builder().build();
         Node document = parser.parse(markdown);
-        HtmlRenderer renderer = HtmlRenderer.builder()
-                .escapeHtml(false)
-                .build();
-        String html = renderer.render(document);
-        return html.replaceAll("^<p>|</p>$", "");
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
     }
 }
