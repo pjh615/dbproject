@@ -17,9 +17,12 @@
     </div>
     <div class="card my-3">
         <div class="card-body">
-            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="50%;">
-            <span class="card-text" style="white-space: pre-line; margin-left: 20px;"
-                  th:text="${post.content}"></span>
+            <span th:if="${post.images[0].imageName != ''}">
+                <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="50%">
+            </span>
+            <span class="card-text" style="width: 50%; margin-left: 10px;" th:utext="${@commonUtil.markdown(post.content)}">
+                <span th:text="${post.content}"></span>
+            </span>
 
             <div class="my-3">
                 <a th:href="@{|/post/like/${post.id}|}" class="recommend btn btn-sm btn-outline-secondary">
@@ -37,7 +40,7 @@
                    sec:authorize="isAuthenticated()" th:if="${#authentication.authorities.![authority].contains('ROLE_ADMIN')
                     or (post.author != null and #authentication.getPrincipal().getUsername() == post.author.memberId)}" th:text="삭제"></a>
             </div>
-        </div>
+        </span>
     </div>
     <!-- 댓글 -->
     <div th:each="comment : ${post.comments}">
