@@ -19,7 +19,9 @@
         <!--    게시글 번호        <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>-->
         <td>
             <a th:href="@{|/post/detail/${post.id}|}">
-            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="25%">
+            <div th:if="${post.images[0].imageName != ''}">
+                <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="25%">
+            </div>
             <div>
                 <span th:text="${post.title}"></span>
             </div>

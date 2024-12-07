@@ -76,7 +76,8 @@ public class CommentsController {
         Comments comment = cService.getComment(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         boolean isAdmin = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
-        if (!comment.getAuthor().getMemberId().equals(principal.getName()) && !isAdmin) {
+        boolean isBartender = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_BARTENDER"));
+        if (!comment.getAuthor().getMemberId().equals(principal.getName()) && !isAdmin && !isBartender) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
         cService.delete(comment);

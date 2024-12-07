@@ -1,5 +1,6 @@
 package com.example.dbproject.service;
 
+import com.example.dbproject.exception.DataNotFoundException;
 import com.example.dbproject.model.Images.Images;
 import com.example.dbproject.model.Images.ImagesRepository;
 import com.example.dbproject.model.Posts.Posts;
@@ -41,7 +42,11 @@ public class ImagesService {
     }
 
     public String save(MultipartFile image, String uploadDir) throws IOException {
-        String fileName = UUID.randomUUID().toString().replace("-", "") + "_" + image.getOriginalFilename();
+        String imageName = image.getOriginalFilename();
+        if(imageName == null || imageName.trim().isEmpty()){
+            return "";
+        }
+        String fileName = UUID.randomUUID().toString().replace("-", "") + "_" + imageName;
         String filePath = uploadDir + fileName;
         String DbFilePath = "/uploads/" + fileName;
 

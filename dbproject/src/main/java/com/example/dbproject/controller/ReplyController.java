@@ -13,6 +13,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,7 +80,10 @@ public class ReplyController {
     @GetMapping("/reply/delete/{id}")
     public String deleteReply(Principal principal, @PathVariable("id") Integer id) {
         Reply reply = rService.getReply(id);
-        if (!reply.getAuthor().getMemberId().equals(principal.getName())) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAdmin = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+        boolean isBartender = auth.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals("ROLE_BARTENDER"));
+        if (!reply.getAuthor().getMemberId().equals(principal.getName()) && !isAdmin && !isBartender) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
         rService.delete(reply);

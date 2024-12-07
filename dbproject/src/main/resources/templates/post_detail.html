@@ -74,7 +74,8 @@
                     <a href="javascript:void(0);" th:data-url="@{|/comment/delete/${comment.id}|}"
                        class="delete btn btn-sm btn-outline-secondary"
                        sec:authorize="isAuthenticated()" th:if="${#authentication.authorities.![authority].contains('ROLE_ADMIN')
-                   or (comment.author != null and (#authentication.getPrincipal().getUsername() == comment.author.memberId))}" th:text="삭제"></a>
+                       or (#authentication.authorities.![authority].contains('ROLE_BARTENDER') and (#authentication.getPrincipal().getUsername() == post.author.memberId))
+                       or (comment.author != null and (#authentication.getPrincipal().getUsername() == comment.author.memberId))}" th:text="삭제"></a>
                 </div>
             </div>
         </div>
@@ -108,8 +109,9 @@
                    and (#authentication.getPrincipal().getUsername() == reply.author.memberId)}" th:text="수정"></a>
                         <a href="javascript:void(0);" th:data-url="@{|/reply/delete/${reply.id}|}"
                            class="delete btn btn-sm btn-outline-secondary"
-                           sec:authorize="isAuthenticated()" th:if="${reply.author != null
-                   and (#authentication.getPrincipal().getUsername() == reply.author.memberId)}" th:text="삭제"></a>
+                           sec:authorize="isAuthenticated()" th:if="${#authentication.authorities.![authority].contains('ROLE_ADMIN')
+                           or (#authentication.authorities.![authority].contains('ROLE_BARTENDER') and (#authentication.getPrincipal().getUsername() == post.author.memberId))
+                           or reply.author != null and (#authentication.getPrincipal().getUsername() == reply.author.memberId)}" th:text="삭제"></a>
                     </div>
                 </div>
             </div>
