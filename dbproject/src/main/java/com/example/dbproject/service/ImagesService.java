@@ -30,6 +30,7 @@ public class ImagesService {
                 String DbFilePath = save(image, uploadDir);
                 Images i = new Images();
                 i.setImagePath(DbFilePath);
+                i.setImageName(image.getOriginalFilename());
                 i.setPost(post);
                 i.setCreateDate(LocalDateTime.now());
                 iRepo.save(i);

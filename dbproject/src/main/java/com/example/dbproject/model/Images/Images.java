@@ -19,6 +19,8 @@ public class Images {
 
     private String imagePath;
 
+    private String imageName;
+
     private LocalDateTime createDate;
 
     @ManyToOne

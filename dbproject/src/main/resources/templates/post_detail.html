@@ -17,7 +17,7 @@
     </div>
     <div class="card my-3">
         <div class="card-body">
-            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" alt="Post Image" width="50%;">
+            <img th:src="@{${post.images[0].imagePath}}" class="img-thumbnail" th:alt="@{${post.images[0].imageName}}" width="50%;">
             <span class="card-text" style="white-space: pre-line; margin-left: 20px;"
                   th:text="${post.content}"></span>
 
