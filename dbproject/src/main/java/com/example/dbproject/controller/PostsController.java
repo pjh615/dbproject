@@ -40,7 +40,11 @@ public class PostsController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/post/create")
-    public String createPost(PostsForm postsForm) {
+    public String createPost(PostsForm postsForm, Principal principal) {
+        String role = mService.getMember(principal.getName()).getRole();
+        if(role.equals("member")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "작성 권한이 없습니다.");
+        }
         return "post_create";
     }
 

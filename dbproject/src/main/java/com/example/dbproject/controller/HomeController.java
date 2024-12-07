@@ -15,11 +15,6 @@ public class HomeController {
 
     private final PostsService pService;
 
-//    @GetMapping("/")
-//    public String home() {
-//        return "homepage";
-//    }
-
     @GetMapping("/")
     public String homepage(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                            @RequestParam(value = "keyword", defaultValue = "") String keyword) {
@@ -28,13 +23,4 @@ public class HomeController {
         model.addAttribute("keyword", keyword);
         return "homepage";
     }
-//
-//    @GetMapping("/logout")
-//    public String logout(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();
-//        }
-//        return "redirect:/";
-//    }
 }
