@@ -5,6 +5,7 @@ import com.example.dbproject.model.Comments.Comments;
 import com.example.dbproject.model.Member.Member;
 import com.example.dbproject.model.Posts.Posts;
 import com.example.dbproject.model.Posts.PostsRepository;
+import com.example.dbproject.model.Reply.Reply;
 import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,14 +37,13 @@ public class PostsService {
                 query.distinct(true);
                 Join<Posts, Member> m1 = root.join("author", JoinType.LEFT);
                 Join<Posts, Comments> c = root.join("comments", JoinType.LEFT);
-                Join<Posts, Member> m2 = root.join("author", JoinType.LEFT);
                 return criteriaBuilder.or(
                         criteriaBuilder.like(root.get("title"), "%" + keyword + "%"),   //title
                         criteriaBuilder.like(root.get("content"), "%" + keyword + "%"), //post content
                         criteriaBuilder.like(m1.get("memberId"), "%" + keyword + "%"),  //author
-                        criteriaBuilder.like(m1.get("nickname"), "%" + keyword + "%"), //nickname 12/04add
+                        criteriaBuilder.like(m1.get("nickname"), "%" + keyword + "%"), //author nickname
                         criteriaBuilder.like(c.get("content"), "%" + keyword + "%"),    //comment content
-                        criteriaBuilder.like(m2.get("memberId"), "%" + keyword + "%")); //comment author
+                        criteriaBuilder.like(c.get("author").get("nickname"), "%" + keyword + "%")); //comment author nickname
             }
         };
     }
